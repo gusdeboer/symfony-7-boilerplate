@@ -13,12 +13,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-
 
 class SecurityController extends AbstractController
 {
@@ -35,7 +34,7 @@ class SecurityController extends AbstractController
         return $this->render('security/login.html.twig', [
             'controller_name' => 'SecurityController',
             'last_username' => $lastUsername,
-            'error' => $error
+            'error' => $error,
         ]);
     }
 
@@ -65,8 +64,9 @@ class SecurityController extends AbstractController
                     'error',
                     'Username already exists.'
                 );
+
                 return $this->render('security/signup.html.twig', [
-                    'form' => $form->createView()
+                    'form' => $form->createView(),
                 ]);
             }
 
@@ -77,8 +77,9 @@ class SecurityController extends AbstractController
                     'error',
                     'Email already exists.'
                 );
+
                 return $this->render('security/signup.html.twig', [
-                    'form' => $form->createView()
+                    'form' => $form->createView(),
                 ]);
             }
 
@@ -87,8 +88,9 @@ class SecurityController extends AbstractController
                     'error',
                     'Passwords do not match.'
                 );
+
                 return $this->render('security/signup.html.twig', [
-                    'form' => $form->createView()
+                    'form' => $form->createView(),
                 ]);
             }
 
@@ -134,6 +136,7 @@ class SecurityController extends AbstractController
     public function googleConnect(ClientRegistry $clientRegistry): Response
     {
         $client = $clientRegistry->getClient('google');
+
         return $client->redirect(['email', 'profile']);
     }
 
@@ -156,7 +159,7 @@ class SecurityController extends AbstractController
             $userRepository = $em->getRepository(User::class);
             $existingUser = $userRepository->findOneBy(['email' => $userData['email']]);
 
-            if($existingUser) {
+            if ($existingUser) {
                 $existingUser->setFirstname($firstName);
                 $existingUser->setLastname($lastName);
                 $newUser = $existingUser;
@@ -181,9 +184,9 @@ class SecurityController extends AbstractController
             $session->set('_security_main', serialize($token));
 
             return $this->redirectToRoute('app_home');
-
         } catch (IdentityProviderException $e) {
-            var_dump($e->getMessage()); die;
+            var_dump($e->getMessage());
+            exit;
         }
     }
 }

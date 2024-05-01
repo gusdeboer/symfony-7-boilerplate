@@ -86,6 +86,14 @@
         ],
         "post-update-cmd": [
             "@auto-scripts"
+        ],
+        "test": "phpunit",
+        "phpstan": "phpstan analyse src tests",
+        "php-cs-fixer": "php-cs-fixer fix --diff --verbose",
+        "php-cs-fixer-dry-run": "php-cs-fixer fix --diff --dry-run --verbose",
+        "stop": [
+            "docker-compose down",
+            "symfony server:stop"
         ]
     },
     "conflict": {
