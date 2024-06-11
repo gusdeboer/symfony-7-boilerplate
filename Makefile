@@ -22,3 +22,6 @@ php-cs-fixer:
 php-cs-fixer-dry-run:
 	symfony composer update friendsofphp/php-cs-fixer
 	vendor/bin/php-cs-fixer fix --ansi --verbose --diff --dry-run
+
+test:
+	symfony php bin/phpunit
