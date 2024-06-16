@@ -16,12 +16,15 @@ final class RegistrationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('email')
-            ->add('password', RepeatedType::class)
-            ->add('firstname')
-            ->add('lastname')
-            ->add('username')
-            ->add('profile_picture')
+            ->add('email', null, ['label' => 'form.email'])
+            ->add('password', RepeatedType::class, [
+                'first_options' => ['label' => 'form.password'],
+                'second_options' => ['label' => 'form.password_confirmation'],
+            ])
+            ->add('firstname', null, ['label' => 'form.firstname'])
+            ->add('lastname', null, ['label' => 'form.lastname'])
+            ->add('username', null, ['label' => 'form.username'])
+            ->add('profile_picture', null, ['label' => 'form.profile_picture'])
             ->add('submit', SubmitType::class)
         ;
     }

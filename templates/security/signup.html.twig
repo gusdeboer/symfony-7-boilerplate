@@ -32,15 +32,19 @@
                     <div>
                         {{ form_row(form.password.first) }}
                     </div>
-                    <div>
-                        {{ form_row(form.password.second) }}
-                    </div>
+                    {{ form_row(form.password.second) }}
                 </div>
                 <div>
-                    {{ form_row(form.submit) }}
+                    {{ form_row(form.username) }}
                 </div>
-                {{ form_end(form) }}
+                <div>
+                    {{ form_row(form.profile_picture) }}
+                </div>
             </div>
+            <div>
+                {{ form_row(form.submit) }}
+            </div>
+            {{ form_end(form) }}
         </div>
     </div>
 {% endblock %}

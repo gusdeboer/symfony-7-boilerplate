@@ -10,6 +10,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
 use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -18,6 +19,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Webmozart\Assert\Assert;
 
 class SecurityController extends AbstractController
 {
@@ -32,7 +34,6 @@ class SecurityController extends AbstractController
         $lastUsername = $authenticationUtils->getLastUsername();
 
         return $this->render('security/login.html.twig', [
-            'controller_name' => 'SecurityController',
             'last_username' => $lastUsername,
             'error' => $error,
         ]);
@@ -83,6 +84,13 @@ class SecurityController extends AbstractController
                 ]);
             }
 
+            if (!$form['password'] || $form['password']['first'] || $form['password']['second']) {
+                throw new \RuntimeException('Password field is not parsed properly.');
+            }
+
+            Assert::isInstanceOf($form['password']['first'], FormInterface::class);
+            Assert::isInstanceOf($form['password']['second'], FormInterface::class);
+
             if ($form['password']['first']->getData() !== $form['password']['second']->getData()) {
                 $this->addFlash(
                     'error',
@@ -97,17 +105,19 @@ class SecurityController extends AbstractController
             if ($form->isValid()) {
                 $user = $form->getData();
 
+                Assert::isInstanceOf($user, User::class);
+
+                $password = $form->get('password')->getData();
+
+                Assert::string($password);
+
                 // Hash the password
                 $user->setPassword(
                     $passwordEncoder->hashPassword(
                         $user,
-                        $form->get('password')->getData()
+                        $password
                     )
                 );
-
-                if (empty($user->getUsername())) {
-                    $user->setPseudo($user->getFirstname());
-                }
 
                 $this->addFlash(
                     'success',
@@ -127,7 +137,7 @@ class SecurityController extends AbstractController
     }
 
     #[Route('/logout', name: 'app_logout', methods: ['GET'])]
-    public function logout()
+    public function logout(): void
     {
         throw new \LogicException('This method can be blank - it will be intercepted by the logout key on your firewall.');
     }
@@ -137,7 +147,7 @@ class SecurityController extends AbstractController
     {
         $client = $clientRegistry->getClient('google');
 
-        return $client->redirect(['email', 'profile']);
+        return $client->redirect(['email', 'profile'], []);
     }
 
     #[Route('/login/google/check', name: 'google_connect_check', methods: ['GET'])]
