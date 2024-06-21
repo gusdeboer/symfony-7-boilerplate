@@ -26,8 +26,8 @@ You can configure the following environment variables:
 ```dotenv
 OAUTH_GOOGLE_ID=
 OAUTH_GOOGLE_SECRET=
-OAUTH_MICROSOFT_ID=
-OAUTH_MICROSOFT_SECRET=
+OAUTH_AZURE_ID=
+OAUTH_AZURE_SECRET=
 ```
 - [Google Credentials](https://console.cloud.google.com/apis/credentials)
-- [Microsoft Credentials](https://portal.azure.com/#view/Microsoft_AAD_IAM/ActiveDirectoryMenuBlade/~/Overview)
+- [Azure Credentials](https://portal.azure.com/#view/Microsoft_AAD_IAM/ActiveDirectoryMenuBlade/~/Overview)

@@ -7,6 +7,6 @@ knpu_oauth2_client:
             redirect_route: google_connect_check
         azure:
             type: azure
-            client_id: '%env(OAUTH_MICROSOFT_ID)%'
-            client_secret: '%env(OAUTH_MICROSOFT_SECRET)%'
+            client_id: '%env(OAUTH_AZURE_ID)%'
+            client_secret: '%env(OAUTH_AZURE_SECRET)%'
             redirect_route: azure_connect_check
