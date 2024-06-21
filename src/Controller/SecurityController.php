@@ -199,4 +199,62 @@ class SecurityController extends AbstractController
             exit;
         }
     }
+
+    #[Route('/login/azure', name: 'azure_connect', methods: ['GET'])]
+    public function azureConnect(ClientRegistry $clientRegistry): Response
+    {
+        return $clientRegistry
+            ->getClient('azure')
+            ->redirect([], []);
+    }
+
+    #[Route('/login/azure/check', name: 'azure_connect_check', methods: ['GET'])]
+    public function azureConnectCheck(Request $request, ClientRegistry $clientRegistry, EntityManagerInterface $em, TokenStorageInterface $tokenStorage, SessionInterface $session): Response
+    {
+        $client = $clientRegistry->getClient('azure');
+
+        try {
+            $user = $client->fetchUser();
+
+            $userData = $user->toArray();
+
+            $fullName = $userData['name'];
+            $nameParts = explode(' ', $fullName);
+
+            $firstName = array_shift($nameParts);
+            $lastName = implode(' ', $nameParts);
+
+            $userRepository = $em->getRepository(User::class);
+            $existingUser = $userRepository->findOneBy(['email' => $userData['email']]);
+
+            if ($existingUser) {
+                $existingUser->setFirstname($firstName);
+                $existingUser->setLastname($lastName);
+                $newUser = $existingUser;
+            } else {
+                $newUser = new User();
+                $newUser->setUsername($userData['given_name']);
+                $newUser->setEmail($userData['email']);
+                $newUser->setOauth('azure');
+                $newUser->setRoles(['ROLE_USER']);
+                $newUser->setProfilePicture($userData['picture'] ?? null);
+                $newUser->setPassword('azure');
+                $newUser->setFirstname($firstName);
+                $newUser->setLastname($lastName);
+            }
+
+            $em->persist($newUser);
+            $em->flush();
+
+            $token = new UsernamePasswordToken($newUser, 'main', $newUser->getRoles());
+
+            $tokenStorage->setToken($token);
+            $session->set('_security_main', serialize($token));
+
+            return $this->redirectToRoute('app_home');
+        } catch (IdentityProviderException $e) {
+            var_dump($e->getMessage());
+            exit;
+        }
+    }
 }

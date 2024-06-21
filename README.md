@@ -7,7 +7,7 @@ This is a boilerplate for Symfony 7 projects. It includes the following features
 - PHP 8.2
 - User authentication
 - User registration
-- Social login (Google)
+- Social login (Google, Microsoft)
 
 ## Installation
 
@@ -24,7 +24,10 @@ This is a boilerplate for Symfony 7 projects. It includes the following features
 You can configure the following environment variables:
 
 ```dotenv
-GOOGLE_ID=
-GOOGLE_SECRET=
+OAUTH_GOOGLE_ID=
+OAUTH_GOOGLE_SECRET=
+OAUTH_MICROSOFT_ID=
+OAUTH_MICROSOFT_SECRET=
 ```
 - [Google Credentials](https://console.cloud.google.com/apis/credentials)
+- [Microsoft Credentials](https://portal.azure.com/#view/Microsoft_AAD_IAM/ActiveDirectoryMenuBlade/~/Overview)
