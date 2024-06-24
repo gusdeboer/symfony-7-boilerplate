@@ -12,7 +12,8 @@ This is a boilerplate for Symfony 7 projects. It includes the following features
 ## Installation
 
 1. Clone the repository
-2. Run `make install`
+2. Run `make start`
+3. Run `make install`
 
 ## Usage
 
