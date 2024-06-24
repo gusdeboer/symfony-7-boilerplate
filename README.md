@@ -7,7 +7,7 @@ This is a boilerplate for Symfony 7 projects. It includes the following features
 - PHP 8.2
 - User authentication
 - User registration
-- Social login (Google, Microsoft)
+- Social login (Google, Azure)
 
 ## Installation
 
