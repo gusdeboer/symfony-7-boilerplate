@@ -47,7 +47,8 @@
         "symfony/yaml": "^7.1.1",
         "thenetworg/oauth2-azure": "^2.2",
         "twig/extra-bundle": "^3.0",
-        "twig/twig": "^3.0"
+        "twig/twig": "^3.0",
+        "webmozart/assert": "^1.11"
     },
     "config": {
         "allow-plugins": {
