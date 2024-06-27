@@ -1,5 +1,6 @@
 install:
 	symfony composer install
+	symfony server:start
 	symfony console doctrine:migrations:migrate --no-interaction
 
 start:
