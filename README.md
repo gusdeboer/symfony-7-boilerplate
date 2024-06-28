@@ -8,6 +8,7 @@ This is a boilerplate for Symfony 7 projects. It includes the following features
 - User authentication
 - User registration
 - Social login (Google, Azure)
+- Github Actions (CI/CD)
 
 ## Installation
 
