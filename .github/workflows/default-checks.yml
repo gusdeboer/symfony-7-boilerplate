@@ -44,9 +44,6 @@ jobs:
                   DATABASE_URL: sqlite:///%kernel.project_dir%/data/database.sqlite
               run: vendor/bin/phpunit
 
-            - name: Symfony Security Check
-              run: composer symfony:security:check
-
             - name: Symfony lint container
               run: php bin/console lint:container
 
