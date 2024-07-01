@@ -7,3 +7,10 @@ form:
     username: Username
     profile_picture: Profile picture
     submit: Submit
+
+settings:
+    setting_one: Setting one
+    setting_two: Setting two
+    setting_three: Setting three
+    setting_four: Setting four
+    setting_five: Setting five
