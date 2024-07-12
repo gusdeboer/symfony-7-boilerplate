@@ -1,6 +1,6 @@
 # Settings
 
-A baic settings module that allows you to manage settings through the database.
+A basic settings module that allows you to manage settings through the database.
 
 ## Usage
 
