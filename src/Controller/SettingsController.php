@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/settings')]
-class SettingController extends AbstractController
+class SettingsController extends AbstractController
 {
     #[Route('/', name: 'app_settings', methods: ['GET', 'POST'])]
     public function edit(Request $request, EntityManagerInterface $entityManager): Response
@@ -34,7 +34,7 @@ class SettingController extends AbstractController
             return $this->redirectToRoute('app_settings', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->render('setting/edit.html.twig', [
+        return $this->render('settings/edit.html.twig', [
             'setting' => $settings,
             'form' => $form,
         ]);

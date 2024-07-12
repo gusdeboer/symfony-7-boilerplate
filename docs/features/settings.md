@@ -11,6 +11,7 @@ to the `settings` table. The `settings` table has the following columns:
 - `key` - The name of the setting.
 - `type` - The type of the setting. The following types are supported, see `SettingsValueTypes`
 - `value` - The value of the setting.
+- `required` - If the setting is required.
 - `updated_at` - The date the setting was last updated.
 
 ## Form

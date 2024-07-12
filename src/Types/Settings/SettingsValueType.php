@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Types;
+namespace App\Types\Settings;
 
 enum SettingsValueType: string
 {

@@ -3,7 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Setting;
-use App\Types\SettingsValueType;
+use App\Types\Settings\SettingsValueType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -20,6 +20,7 @@ class SettingType extends AbstractType
         Assert::allIsInstanceOf($options['settings'], Setting::class);
 
         foreach ($options['settings'] as $setting) {
+
             $type = match ($setting->getType()) {
                 SettingsValueType::String => null,
                 SettingsValueType::Integer => NumberType::class,
@@ -30,11 +31,8 @@ class SettingType extends AbstractType
             };
 
             $options = match ($setting->getType()) {
-                SettingsValueType::String => [],
-                SettingsValueType::Integer => ['html5' => true],
-                SettingsValueType::Boolean => [],
-                SettingsValueType::Json => [],
-                SettingsValueType::Date => ['html5' => true],
+                SettingsValueType::String, SettingsValueType::Json, SettingsValueType::Boolean, => [],
+                SettingsValueType::Date, SettingsValueType::Integer => ['html5' => true],
                 default => throw new \InvalidArgumentException(sprintf('Unsupported setting type "%s"', $setting->getType()))
             };
 
@@ -51,7 +49,7 @@ class SettingType extends AbstractType
             $builder->add($setting->getKey(), $type, [
                 'label' => sprintf('settings.%s', $setting->getKey()),
                 'data' => $value,
-                'required' => false,
+                'required' => $setting->isRequired(),
             ] + $options);
         }
     }

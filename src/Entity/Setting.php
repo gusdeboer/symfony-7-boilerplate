@@ -3,7 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\SettingRepository;
-use App\Types\SettingsValueType;
+use App\Types\Settings\SettingsValueType;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -23,6 +23,9 @@ class Setting
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private mixed $value = null;
+
+    #[ORM\Column(type: Types::BOOLEAN, options: ['default' => false])]
+    private bool $required = false;
 
     #[ORM\Column]
     private ?\DateTimeImmutable $updatedAt = null;
@@ -54,6 +57,18 @@ class Setting
         $this->type = $type;
 
         return $this;
+    }
+
+    public function setRequired(bool $required): static
+    {
+        $this->required = $required;
+
+        return $this;
+    }
+
+    public function isRequired(): bool
+    {
+        return $this->required;
     }
 
     public function getValue(): mixed
