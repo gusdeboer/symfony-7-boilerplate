@@ -20,7 +20,6 @@ class SettingType extends AbstractType
         Assert::allIsInstanceOf($options['settings'], Setting::class);
 
         foreach ($options['settings'] as $setting) {
-
             $type = match ($setting->getType()) {
                 SettingsValueType::String => null,
                 SettingsValueType::Integer => NumberType::class,
