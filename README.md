@@ -23,4 +23,4 @@ This is a boilerplate for Symfony 7 projects. It includes the following features
 
 ## Docs
 
-More information can be found in the [docs](docs/README.md) directory.
+More information can be found in the [docs](docs/docs.md) directory.
