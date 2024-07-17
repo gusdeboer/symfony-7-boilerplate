@@ -209,7 +209,7 @@ class SecurityController extends AbstractController
     }
 
     #[Route('/login/azure/check', name: 'azure_connect_check', methods: ['GET'])]
-    public function azureConnectCheck(Request $request, ClientRegistry $clientRegistry, EntityManagerInterface $em, TokenStorageInterface $tokenStorage, SessionInterface $session): Response
+    public function azureConnectCheck(ClientRegistry $clientRegistry, EntityManagerInterface $em, TokenStorageInterface $tokenStorage, SessionInterface $session): Response
     {
         $client = $clientRegistry->getClient('azure');
 

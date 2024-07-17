@@ -9,6 +9,12 @@ This is a boilerplate for Symfony 7 projects. It includes the following features
 - User registration
 - Social login (Google, Azure)
 - Github Actions (CI/CD)
+- Dependabot
+- Makefile
+  - PHPStan
+  - PHP-CS-FIXER
+  - Rector
+  - PHP unit
 
 ## Installation
 
