@@ -26,7 +26,7 @@ class SecurityController extends AbstractController
     #[Route('/login', name: 'app_login', methods: ['GET', 'POST'])]
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
-        if ($this->getUser()) {
+        if ($this->getUser() instanceof \Symfony\Component\Security\Core\User\UserInterface) {
             return $this->redirectToRoute('app_home');
         }
 
@@ -42,7 +42,7 @@ class SecurityController extends AbstractController
     #[Route('/signup', name: 'app_signup', methods: ['GET', 'POST'])]
     public function registration(Request $request, EntityManagerInterface $manager, UserPasswordHasherInterface $passwordEncoder): Response
     {
-        if ($this->getUser()) {
+        if ($this->getUser() instanceof \Symfony\Component\Security\Core\User\UserInterface) {
             return $this->redirectToRoute('app_home');
         }
 
@@ -60,7 +60,7 @@ class SecurityController extends AbstractController
 
             $existingUser = $manager->getRepository(User::class)->findOneBy(['username' => $pseudo]);
 
-            if ($existingUser) {
+            if (null !== $existingUser) {
                 $this->addFlash(
                     'error',
                     'Username already exists.'
@@ -73,7 +73,7 @@ class SecurityController extends AbstractController
 
             $existingUser = $manager->getRepository(User::class)->findOneBy(['email' => $email]);
 
-            if ($existingUser) {
+            if (null !== $existingUser) {
                 $this->addFlash(
                     'error',
                     'Email already exists.'
@@ -84,7 +84,7 @@ class SecurityController extends AbstractController
                 ]);
             }
 
-            if (!$form['password'] || $form['password']['first'] || $form['password']['second']) {
+            if (!$form['password'] instanceof FormInterface || $form['password']['first'] instanceof FormInterface || $form['password']['second'] instanceof FormInterface) {
                 throw new \RuntimeException('Password field is not parsed properly.');
             }
 
@@ -169,7 +169,7 @@ class SecurityController extends AbstractController
             $userRepository = $em->getRepository(User::class);
             $existingUser = $userRepository->findOneBy(['email' => $userData['email']]);
 
-            if ($existingUser) {
+            if (null !== $existingUser) {
                 $existingUser->setFirstname($firstName);
                 $existingUser->setLastname($lastName);
                 $newUser = $existingUser;
@@ -194,8 +194,8 @@ class SecurityController extends AbstractController
             $session->set('_security_main', serialize($token));
 
             return $this->redirectToRoute('app_home');
-        } catch (IdentityProviderException $e) {
-            var_dump($e->getMessage());
+        } catch (IdentityProviderException $identityProviderException) {
+            var_dump($identityProviderException->getMessage());
             exit;
         }
     }
@@ -227,7 +227,7 @@ class SecurityController extends AbstractController
             $userRepository = $em->getRepository(User::class);
             $existingUser = $userRepository->findOneBy(['email' => $userData['email']]);
 
-            if ($existingUser) {
+            if (null !== $existingUser) {
                 $existingUser->setFirstname($firstName);
                 $existingUser->setLastname($lastName);
                 $newUser = $existingUser;
@@ -252,8 +252,8 @@ class SecurityController extends AbstractController
             $session->set('_security_main', serialize($token));
 
             return $this->redirectToRoute('app_home');
-        } catch (IdentityProviderException $e) {
-            var_dump($e->getMessage());
+        } catch (IdentityProviderException $identityProviderException) {
+            var_dump($identityProviderException->getMessage());
             exit;
         }
     }
