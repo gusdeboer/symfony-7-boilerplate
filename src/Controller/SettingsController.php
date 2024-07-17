@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller;
 
 use App\Entity\Setting;
@@ -29,6 +31,7 @@ class SettingsController extends AbstractController
                 $setting->setValue($value);
                 $setting->setUpdatedAt(new \DateTimeImmutable());
             }
+
             $entityManager->flush();
 
             return $this->redirectToRoute('app_settings', [], Response::HTTP_SEE_OTHER);

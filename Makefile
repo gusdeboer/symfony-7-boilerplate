@@ -25,3 +25,11 @@ php-cs-fixer-dry-run:
 
 phpunit:
 	symfony php bin/phpunit
+
+rector:
+	symfony composer update rector/rector
+	vendor/bin/rector process src --ansi --verbose
+
+rector-dry-run:
+	symfony composer update rector/rector
+	vendor/bin/rector process src --ansi --verbose --dry-run
