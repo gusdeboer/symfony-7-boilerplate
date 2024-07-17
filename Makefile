@@ -3,12 +3,12 @@ install:
 	symfony console doctrine:migrations:migrate --no-interaction
 
 start:
-	docker-compose up -d
+	docker compose up -d
 	symfony server:start
 	symfony console messenger:consume async --limit=20 --time-limit=600 --memory-limit=128M
 
 stop:
-	docker-compose down
+	docker compose down
 	symfony server:stop
 
 phpstan:

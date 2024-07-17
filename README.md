@@ -19,7 +19,7 @@ This is a boilerplate for Symfony 7 projects. It includes the following features
 ## Usage
 
 1. Run `make start`
-2. Open your browser and go to `http://localhost:8000`
+2. Open your browser and go to `http://127.0.0.1:8000`
 
 ## Configuration
 
