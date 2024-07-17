@@ -21,15 +21,6 @@ This is a boilerplate for Symfony 7 projects. It includes the following features
 1. Run `make start`
 2. Open your browser and go to `http://127.0.0.1:8000`
 
-## Configuration
+## Docs
 
-You can configure the following environment variables:
-
-```dotenv
-OAUTH_GOOGLE_ID=
-OAUTH_GOOGLE_SECRET=
-OAUTH_AZURE_ID=
-OAUTH_AZURE_SECRET=
-```
-- [Google Credentials](https://console.cloud.google.com/apis/credentials)
-- [Azure Credentials](https://portal.azure.com/#view/Microsoft_AAD_IAM/ActiveDirectoryMenuBlade/~/Overview)
+More information can be found in the [docs](docs/README.md) directory.

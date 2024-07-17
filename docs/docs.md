@@ -6,6 +6,5 @@
 
 ## Integration
 
-- [GitHub Actions](./integration/github-actions.md)
-- [Google oAuth](./integration/google-oauth.md)
-- [Azure oAuth](./integration/azure-oauth.md)
+- [Google oAuth](./integrations/google-oauth.md)
+- [Azure oAuth](./integrations/azure-oauth.md)
