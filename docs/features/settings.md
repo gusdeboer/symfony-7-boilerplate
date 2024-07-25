@@ -46,7 +46,7 @@ The service can be used to retrieve settings by key.
 use App\Services\SettingsService;
 use App\Types\Settings\SettingKeyType;
 
-readonly class FooBarController{
+readonly class FooBarController {
     
     public function __construct(
         private SettingsService $settingsService
