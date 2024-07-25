@@ -43,8 +43,20 @@ The `SettingsService` class is used to retrieve settings from the database.
 The service can be used to retrieve settings by key.
 
 ```php
-$settingsService = new SettingsService();
-$setting = $settingsService->getSetting(\App\Types\Settings\SettingKeyType::SettingOne);
+use App\Services\SettingsService;
+use App\Types\Settings\SettingKeyType;
+
+readonly class FooBarController{
+    
+    public function __construct(
+        private SettingsService $settingsService
+    ) {}
+
+    public fucntion index(): void
+    {
+        $settingOne = $this->settingsService->getSetting(SettingKeyType::SettingOne);
+    }
+}
 ```
 
 ## Translations
