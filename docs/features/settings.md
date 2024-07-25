@@ -52,7 +52,7 @@ readonly class FooBarController {
         private SettingsService $settingsService
     ) {}
 
-    public fucntion index(): void
+    public function index(): void
     {
         $settingOne = $this->settingsService->getSetting(SettingKeyType::SettingOne);
     }
