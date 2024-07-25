@@ -29,13 +29,11 @@ class SettingType extends AbstractType
                 SettingsValueType::Boolean => CheckboxType::class,
                 SettingsValueType::Json => TextType::class,
                 SettingsValueType::Date => DateType::class,
-                default => throw new \InvalidArgumentException(sprintf('Unsupported setting type "%s". Add the setting type to SettingsValueType', $setting->getType()->value))
             };
 
             $options = match ($setting->getType()) {
                 SettingsValueType::String, SettingsValueType::Json, SettingsValueType::Boolean, => [],
                 SettingsValueType::Date, SettingsValueType::Integer => ['html5' => true],
-                default => throw new \InvalidArgumentException(sprintf('Unsupported setting type "%s". Add the setting type to SettingsValueType', $setting->getType()->value))
             };
 
             $value = $setting->getValue();
