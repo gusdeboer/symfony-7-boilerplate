@@ -73,3 +73,11 @@ settings:
 
 To add a new service simply write a new migration to add the setting to the database.
 Then add the setting key to the `SettingKeyType` class.
+
+```sql
+INSERT INTO setting (`id`, `key`, `type`, `value`, `required`, `updated_at`) VALUES (1, 'setting_one', 'string', '1', true, '2024-07-25 18:33:21');
+INSERT INTO setting (`id`, `key`, `type`, `value`, `required`, `updated_at`) VALUES (2, 'setting_two', 'integer', null, false, '2024-07-25 18:33:21');
+INSERT INTO setting (`id`, `key`, `type`, `value`, `required`, `updated_at`) VALUES (3, 'setting_three', 'boolean', '1', true, '2024-07-25 18:33:21');
+INSERT INTO setting (`id`, `key`, `type`, `value`, `required`, `updated_at`) VALUES (4, 'setting_four', 'date', null, false, '2024-07-25 18:33:21');
+INSERT INTO setting (`id`, `key`, `type`, `value`, `required`, `updated_at`) VALUES (5, 'setting_five', 'json', '{}', false, '2024-07-25 18:33:21');
+```
