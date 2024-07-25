@@ -18,6 +18,35 @@ to the `settings` table. The `settings` table has the following columns:
 
 The form type can be altered in `src/Form/SettingType.php`
 
+## Setting Keys
+
+Setting keys are used to identify the setting in the application. The key should be unique
+and should be used to reference the setting in the application.
+
+Settings depend on the key to be able to retrieve the setting value.
+
+## Setting Value Types
+
+The following value types are supported:
+
+- `string` - A string value.
+- `integer` - An integer value.
+- `boolean` - A boolean value.
+- `date` - A date value.
+- `json` - A JSON value.
+
+More value types can be added by extending the `SettingsValueTypes` class.
+
+## Settings Service
+
+The `SettingsService` class is used to retrieve settings from the database.
+The service can be used to retrieve settings by key.
+
+```php
+$settingsService = new SettingsService();
+$setting = $settingsService->getSetting(\App\Types\Settings\SettingKeyType::SettingOne);
+```
+
 ## Translations
 
 Translations for specific settings can be added to the `translations/messages.en.yml`
@@ -27,3 +56,8 @@ And are based on the `key` of the setting.
 settings:
     setting_key: "Setting Name"
 ```
+
+## Adding a new setting
+
+To add a new service simply write a new migration to add the setting to the database.
+Then add the setting key to the `SettingKeyType` class.

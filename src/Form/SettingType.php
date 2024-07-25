@@ -21,6 +21,7 @@ class SettingType extends AbstractType
     {
         Assert::allIsInstanceOf($options['settings'], Setting::class);
 
+        /** @var Setting $setting */
         foreach ($options['settings'] as $setting) {
             $type = match ($setting->getType()) {
                 SettingsValueType::String => null,
@@ -28,13 +29,13 @@ class SettingType extends AbstractType
                 SettingsValueType::Boolean => CheckboxType::class,
                 SettingsValueType::Json => TextType::class,
                 SettingsValueType::Date => DateType::class,
-                default => throw new \InvalidArgumentException(sprintf('Unsupported setting type "%s"', $setting->getType()))
+                default => throw new \InvalidArgumentException(sprintf('Unsupported setting type "%s". Add the setting type to SettingsValueType', $setting->getType()->value))
             };
 
             $options = match ($setting->getType()) {
                 SettingsValueType::String, SettingsValueType::Json, SettingsValueType::Boolean, => [],
                 SettingsValueType::Date, SettingsValueType::Integer => ['html5' => true],
-                default => throw new \InvalidArgumentException(sprintf('Unsupported setting type "%s"', $setting->getType()))
+                default => throw new \InvalidArgumentException(sprintf('Unsupported setting type "%s". Add the setting type to SettingsValueType', $setting->getType()->value))
             };
 
             $value = $setting->getValue();
@@ -47,8 +48,8 @@ class SettingType extends AbstractType
                 $value = new \DateTime($setting->getValue());
             }
 
-            $builder->add($setting->getKey(), $type, [
-                'label' => sprintf('settings.%s', $setting->getKey()),
+            $builder->add($setting->getKey()->value, $type, [
+                'label' => sprintf('settings.%s', $setting->getKey()->value),
                 'data' => $value,
                 'required' => $setting->isRequired(),
             ] + $options);

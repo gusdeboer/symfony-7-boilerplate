@@ -6,6 +6,7 @@ namespace App\Services\Settings;
 
 use App\Entity\Setting;
 use App\Repository\SettingRepository;
+use App\Types\Settings\SettingKeyType;
 use Webmozart\Assert\Assert;
 
 final readonly class SettingsService
@@ -15,7 +16,7 @@ final readonly class SettingsService
     ) {
     }
 
-    public function getSetting(string $key): Setting
+    public function getSetting(SettingKeyType $key): Setting
     {
         $setting = $this->settingRepository->findBy(['key' => $key]);
 

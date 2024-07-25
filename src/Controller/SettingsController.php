@@ -27,7 +27,7 @@ class SettingsController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             foreach ($settings as $setting) {
                 $key = $setting->getKey();
-                $value = $form->get($key)->getData();
+                $value = $form->get($key->value)->getData();
                 $setting->setValue($value);
                 $setting->setUpdatedAt(new \DateTimeImmutable());
             }
