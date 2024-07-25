@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Entity;
 
 use App\Repository\SettingRepository;
+use App\Types\Settings\SettingKeyType;
 use App\Types\Settings\SettingsValueType;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -17,11 +18,11 @@ class Setting
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
-    private string $key;
+    #[ORM\Column(length: 255, unique: true, enumType: SettingKeyType::class)]
+    private SettingKeyType $key;
 
     #[ORM\Column(enumType: SettingsValueType::class)]
-    private ?SettingsValueType $type = null;
+    private SettingsValueType $type;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private mixed $value = null;
@@ -37,19 +38,19 @@ class Setting
         return $this->id;
     }
 
-    public function getKey(): string
+    public function getKey(): SettingKeyType
     {
         return $this->key;
     }
 
-    public function setKey(string $key): static
+    public function setKey(SettingKeyType $key): static
     {
         $this->key = $key;
 
         return $this;
     }
 
-    public function getType(): ?SettingsValueType
+    public function getType(): SettingsValueType
     {
         return $this->type;
     }
