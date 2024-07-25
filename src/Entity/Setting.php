@@ -22,7 +22,7 @@ class Setting
     private SettingKeyType $key;
 
     #[ORM\Column(enumType: SettingsValueType::class)]
-    private ?SettingsValueType $type = null;
+    private SettingsValueType $type;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private mixed $value = null;
@@ -50,7 +50,7 @@ class Setting
         return $this;
     }
 
-    public function getType(): ?SettingsValueType
+    public function getType(): SettingsValueType
     {
         return $this->type;
     }
