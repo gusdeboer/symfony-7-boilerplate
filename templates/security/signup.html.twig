@@ -29,7 +29,10 @@
                     {{ form_row(form.email) }}
                 </div>
                 <div>
-                    {{ form_row(form.password) }}
+                    <div>
+                        {{ form_row(form.password.first) }}
+                    </div>
+                    {{ form_row(form.password.second) }}
                 </div>
                 <div>
                     {{ form_row(form.username) }}
