@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Form\LoginType;
 use App\Form\RegistrationType;
 use Doctrine\ORM\EntityManagerInterface;
 use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
 use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -18,24 +18,32 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
-use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Webmozart\Assert\Assert;
 
 class SecurityController extends AbstractController
 {
     #[Route('/login', name: 'app_login', methods: ['GET', 'POST'])]
-    public function login(AuthenticationUtils $authenticationUtils): Response
+    public function login(Request $request, EntityManagerInterface $manager, UserPasswordHasherInterface $passwordEncoder): Response
     {
         if ($this->getUser() instanceof \Symfony\Component\Security\Core\User\UserInterface) {
             return $this->redirectToRoute('app_home');
         }
 
-        $error = $authenticationUtils->getLastAuthenticationError();
-        $lastUsername = $authenticationUtils->getLastUsername();
+        $form = $this->createForm(LoginType::class);
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted()) {
+            $email = $form->get('email')->getData();
+            $user = $manager->getRepository(User::class)->findOneBy(['email' => $email]);
+            if (!$user || !$passwordEncoder->isPasswordValid($user, $form->get('password')->getData())) {
+                throw new \RuntimeException('No user was found with provided credentials.');
+            }
+            dd($user);
+        }
+
 
         return $this->render('security/login.html.twig', [
-            'last_username' => $lastUsername,
-            'error' => $error,
+            'form' => $form->createView(),
         ]);
     }
 
@@ -77,24 +85,6 @@ class SecurityController extends AbstractController
                 $this->addFlash(
                     'error',
                     'Email already exists.'
-                );
-
-                return $this->render('security/signup.html.twig', [
-                    'form' => $form->createView(),
-                ]);
-            }
-
-            if (!$form['password'] instanceof FormInterface || $form['password']['first'] instanceof FormInterface || $form['password']['second'] instanceof FormInterface) {
-                throw new \RuntimeException('Password field is not parsed properly.');
-            }
-
-            Assert::isInstanceOf($form['password']['first'], FormInterface::class);
-            Assert::isInstanceOf($form['password']['second'], FormInterface::class);
-
-            if ($form['password']['first']->getData() !== $form['password']['second']->getData()) {
-                $this->addFlash(
-                    'error',
-                    'Passwords do not match.'
                 );
 
                 return $this->render('security/signup.html.twig', [
