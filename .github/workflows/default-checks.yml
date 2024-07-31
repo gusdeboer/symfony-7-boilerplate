@@ -39,7 +39,7 @@ jobs:
             - name: Execute tests (Unit and Feature tests) via PHPUnit
               env:
                   DATABASE_URL: sqlite:///%kernel.project_dir%/data/database.sqlite
-              run: vendor/bin/phpunit
+              run: make phpunit
 
             - name: Symfony lint container
               run: php bin/console lint:container
@@ -51,8 +51,8 @@ jobs:
               run: php bin/console lint:yaml config
 
             - name: PHPStan
-              run: vendor/bin/phpstan analyse
+              run: make phpstan
 
             - name: PHP-CS-Fixer
-              run: vendor/bin/php-cs-fixer fix --dry-run --diff --ansi
+              run: make php-cs-fixer-dry
 

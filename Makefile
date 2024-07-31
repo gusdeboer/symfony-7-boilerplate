@@ -19,7 +19,7 @@ php-cs-fixer:
 	symfony composer update friendsofphp/php-cs-fixer
 	vendor/bin/php-cs-fixer fix --ansi --verbose --diff
 
-php-cs-fixer-dry-run:
+php-cs-fixer-dry:
 	symfony composer update friendsofphp/php-cs-fixer
 	vendor/bin/php-cs-fixer fix --ansi --verbose --diff --dry-run
 
