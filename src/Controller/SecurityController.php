@@ -42,7 +42,7 @@ class SecurityController extends AbstractController
     #[Route('/signup', name: 'app_signup', methods: ['GET', 'POST'])]
     public function registration(Request $request, EntityManagerInterface $manager, UserPasswordHasherInterface $passwordEncoder): Response
     {
-        if ($this->getUser() instanceof \Symfony\Component\Security\Core\User\UserInterface) {
+        if ($this->getUser() instanceof UserInterface) {
             return $this->redirectToRoute('app_home');
         }
 
