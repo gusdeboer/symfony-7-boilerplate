@@ -12,7 +12,7 @@ use Webmozart\Assert\Assert;
 final readonly class SettingsService
 {
     public function __construct(
-        private SettingRepository $settingRepository
+        private SettingRepository $settingRepository,
     ) {
     }
 
